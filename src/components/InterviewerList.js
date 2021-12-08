@@ -4,15 +4,14 @@ import InterviewerListItem from "./InterviewerListItem";
 
 export default function InterviewerList(props) {
   // Creates a InterviewerListItem component for each interviewer from the list of interviewers
-  const interviewerListItemsArray = props.interviewers.map((currInterviewer) => {
+  const interviewerListItemsArray = props.interviewers.map((interviewer) => {
     return (
       <InterviewerListItem
-        key={currInterviewer.id}
-        id={currInterviewer.id}
-        name={currInterviewer.name}
-        avatar={currInterviewer.avatar}
-        selected={props.interviewer === currInterviewer.id}
-        setInterviewer={props.setInterviewer}
+        key={interviewer.id}
+        name={interviewer.name}
+        avatar={interviewer.avatar}
+        selected={props.interviewer === interviewer.id}
+        setInterviewer={() => props.setInterviewer(interviewer.id)}
       />
     );
   });
