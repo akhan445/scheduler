@@ -55,6 +55,19 @@ export default function Appointment(props) {
     transition(EDIT);
   }
 
+
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+
+    transition(SAVING);
+    props.bookInterview(props.id, interview)
+      .then(() => transition(SHOW))
+      .catch(err => console.log(err));
+  }
+
   return (
     <article className="appointment">
       <Header time={props.time} />
