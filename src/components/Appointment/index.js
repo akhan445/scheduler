@@ -7,6 +7,7 @@ import useVisualMode from "hooks/useVisualMode";
 import Form from "./Form";
 import Status from "./Status";
 import Confirm from "./Confirm";
+import Error from "./Error";
 
 
 export default function Appointment(props) {
@@ -17,6 +18,8 @@ export default function Appointment(props) {
   const DELETING = "DELETING";
   const CONFIRM = "CONFIRM";
   const EDIT = "EDIT";
+  const ERROR_SAVE = "ERROR_SAVE";
+  const ERROR_DELETE = "ERROR_DELETE";
   
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -33,7 +36,7 @@ export default function Appointment(props) {
     // make the request to add appointment to api and once succeeds display the appointment information
     props.bookInterview(props.id, interview)
       .then(() => transition(SHOW))
-      .catch(err => console.log(err));
+      .catch(err => transition(ERROR_SAVE, true));
   }
 
   function confirm() {
@@ -41,10 +44,10 @@ export default function Appointment(props) {
   }
   // deletes existing appointment
   function deleteAppointment() {
-    transition(DELETING);
+    transition(DELETING, true);
     props.cancelInterview(props.id)
       .then(() => transition(EMPTY))
-      .catch(err => console.log(err));
+      .catch(err => transition(ERROR_DELETE, true));
   }
 
   // edit an existing appointment
@@ -75,6 +78,7 @@ export default function Appointment(props) {
       {mode === DELETING && <Status message="Deleting" />}
       {mode === CONFIRM && (
         <Confirm
+          message="Are you sure you would like to delete?"
           onCancel={back}
           onConfirm={deleteAppointment}
         />
@@ -86,6 +90,18 @@ export default function Appointment(props) {
           interviewers={props.interviewers}
           onSave={save}
           onCancel={back}
+        />
+      )}
+      {mode === ERROR_SAVE && (
+        <Error
+          message="Unable to save appointment"
+          onClose={back}
+        />
+        )}
+      {mode === ERROR_DELETE && (
+        <Error
+          message="Unable to delete appointment"
+          onClose={back}
         />
       )}
     </article>

@@ -44,8 +44,7 @@ export default function Application(props) {
           ...state,
           appointments
         });
-      })
-      .catch(err => console.log(err));
+      });
   }
 
   // delete an appointment
@@ -65,8 +64,7 @@ export default function Application(props) {
           ...state,
           appointments
         });
-      })
-      .catch(err => console.log(err));
+      });
   }
 
   // set the daily appointment and interviewers schedule by fetching the appointments by day and mapping each to Appointment component
