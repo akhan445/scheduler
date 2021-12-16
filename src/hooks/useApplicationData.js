@@ -33,12 +33,22 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-
     return axios.put(`/api/appointments/${id}`, {interview})
       .then(() => {
+        //find the index value of current day object
+        const index = state.days.findIndex(item => item.name === state.day);
+        //update the days array
+        const newDay = {
+          ...state.days[index],
+          spots: state.days[index].spots - 1
+        }
+        const newDays = [...state.days];
+        newDays.splice(index, 1, newDay);
+
         setState({
-          ...state,
-          appointments
+            ...state,
+            days: newDays,
+            appointments
         });
       });
   }
@@ -56,8 +66,19 @@ export default function useApplicationData() {
 
     return axios.delete(`/api/appointments/${id}`)
       .then(() => {
+        //find the index value of current day object
+        const index = state.days.findIndex(item => item.name === state.day);
+        //update the days array
+        const newDay = {
+          ...state.days[index],
+          spots: state.days[index].spots + 1
+        }
+        const newDays = [...state.days];
+        newDays.splice(index, 1, newDay);
+        
         setState({
           ...state,
+          days: newDays,
           appointments
         });
       });
