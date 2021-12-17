@@ -1,6 +1,22 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+// Helper function which returns the updated days array after add or delete
+const updateDays = function(state, isAdd) {
+  const val = isAdd ? -1 : 1;
+  //find the index value of current day object
+  const index = state.days.findIndex(item => item.name === state.day);
+  //update the days array
+  const newDay = {
+    ...state.days[index],
+    spots: state.days[index].spots + val
+  }
+  const newDays = [...state.days];
+  newDays.splice(index, 1, newDay); // replace the old day value with the new one
+
+  return newDays;
+}
+
 export default function useApplicationData() {
   const [state, setState] = useState({
     day: "Monday",
@@ -35,15 +51,7 @@ export default function useApplicationData() {
     };
     return axios.put(`/api/appointments/${id}`, {interview})
       .then(() => {
-        //find the index value of current day object
-        const index = state.days.findIndex(item => item.name === state.day);
-        //update the days array
-        const newDay = {
-          ...state.days[index],
-          spots: state.days[index].spots - 1
-        }
-        const newDays = [...state.days];
-        newDays.splice(index, 1, newDay);
+        const newDays = updateDays(state, true); // call the helper function to return an updated versiond of the days array
 
         setState({
             ...state,
@@ -66,15 +74,7 @@ export default function useApplicationData() {
 
     return axios.delete(`/api/appointments/${id}`)
       .then(() => {
-        //find the index value of current day object
-        const index = state.days.findIndex(item => item.name === state.day);
-        //update the days array
-        const newDay = {
-          ...state.days[index],
-          spots: state.days[index].spots + 1
-        }
-        const newDays = [...state.days];
-        newDays.splice(index, 1, newDay);
+        const newDays = updateDays(state, false); // call the helper function to return an updated versiond of the days array
         
         setState({
           ...state,
