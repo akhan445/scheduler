@@ -34,7 +34,7 @@ export default function Appointment(props) {
 
     transition(SAVING);
     // make the request to add appointment to api and once succeeds display the appointment information
-    props.bookInterview(props.id, interview)
+    props.bookInterview(props.id, interview, mode)
       .then(() => transition(SHOW))
       .catch(err => transition(ERROR_SAVE, true));
   }
@@ -53,19 +53,6 @@ export default function Appointment(props) {
   // edit an existing appointment
   function edit() {
     transition(EDIT);
-  }
-
-
-  function save(name, interviewer) {
-    const interview = {
-      student: name,
-      interviewer
-    };
-
-    transition(SAVING);
-    props.bookInterview(props.id, interview)
-      .then(() => transition(SHOW))
-      .catch(err => console.log(err));
   }
 
   return (

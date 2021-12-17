@@ -39,8 +39,9 @@ export default function useApplicationData() {
     });
   }, []);
 
-  // add new appointment
-  function bookInterview(id, interview) {
+  // add new appointment, mode is passed from Appointment to add an additional check
+  // so spots is not updated when user is editting an existing interview slot
+  function bookInterview(id, interview, mode) {
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -51,8 +52,9 @@ export default function useApplicationData() {
     };
     return axios.put(`/api/appointments/${id}`, {interview})
       .then(() => {
-        const newDays = updateDays(state, true); // call the helper function to return an updated versiond of the days array
-
+        // call the helper function to return an updated versiond of the days array, only change it if the mode is CREATE
+        const newDays = mode === "CREATE" ? updateDays(state, true) : [...state.days]; 
+        
         setState({
             ...state,
             days: newDays,
