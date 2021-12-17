@@ -8,6 +8,7 @@ export default function useVisualMode(initial) {
     setMode(newMode);
     setHistory(prev => {
       const arr = [...prev, newMode];
+      
       if (replace && prev.length > 1) {
         arr.splice(-2, 1);// remove the second last in history
       }

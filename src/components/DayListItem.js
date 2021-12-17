@@ -3,7 +3,12 @@ import classNames from "classnames";
 import "components/DayListItem.scss";
 
 export default function DayListItem(props) {
-  // formats the text for interview spots remaining
+  
+  /**
+   * Function which formats the text to be displayed for the number of interview spots remaining per day
+   * @param {number} spots 
+   * @returns string of spots remaining to be displayed
+   */
   function formatSpots(spots) {
     if (spots > 1) {
       return `${spots} spots remaining`;

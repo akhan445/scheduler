@@ -25,7 +25,11 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
   
-  // save a new appointment
+  /**
+   * Function which is called when a user enters details to book a new interview
+   * @param {string} name- The name of the student
+   * @param {number} interviewer - The id of the interviewer
+   */
   function save(name, interviewer) {
     const interview = {
       student: name,
@@ -33,24 +37,32 @@ export default function Appointment(props) {
     };
 
     transition(SAVING);
-    // make the request to add appointment to api and once succeeds display the appointment information
+    /* pass the form details to useApplicationData hook to process and save details */
     props.bookInterview(props.id, interview, mode)
       .then(() => transition(SHOW))
       .catch(err => transition(ERROR_SAVE, true));
   }
-
+  /** 
+   * Function which displays the Confirm component
+   */
   function confirm() {
     transition(CONFIRM);
   }
-  // deletes existing appointment
+
+  /**
+   * Function which deletes an existed appointment from the scheduler
+   */
   function deleteAppointment() {
     transition(DELETING, true);
+    /* pass the form details to useApplicationData hook to process deletion */
     props.cancelInterview(props.id)
       .then(() => transition(EMPTY))
       .catch(err => transition(ERROR_DELETE, true));
   }
 
-  // edit an existing appointment
+  /**
+   * Renders the Edit component upon clicking the edit button
+   */
   function edit() {
     transition(EDIT);
   }

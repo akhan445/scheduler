@@ -3,37 +3,40 @@ import InterviewerList from "components/InterviewerList";
 import Button from "components/Button";
 
 export default function Form(props) {
-  const [student, setStudent] = useState(props.student || "");
+  const [student, setStudent] = useState(props.student || ""); 
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
   const [error, setError] = useState("");
 
-  // reset the values of the state hooks
+  /** 
+   * Function which resets the values of the state hooks 
+   */
   function reset() {
     setStudent("");
     setInterviewer(null);
     setError("");
   }
 
-  // function called when user cancels, resets the values of the state 
-  // and then call the onCancel function passed through props
+  /** 
+   * Function called when user cancels, resets the values of the state and 
+   * then call the onCancel function passed through props 
+   */
   function cancel() {
     reset();
     props.onCancel();
   }
 
+  /** 
+   * Function which validates form inputs and resets values before saving
+   */
   function validate() {
     if (student === "") {
       setError("Student name cannot be blank");
       return;
     }
-    // Add secondary check to make sure interviewer is selected 
-    if (interviewer === null) {
-      setError("Interviewer must be selected");
-      return;
-    }
     setError("");
     props.onSave(student, interviewer);
   }
+
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">

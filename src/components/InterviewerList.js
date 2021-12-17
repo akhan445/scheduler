@@ -4,7 +4,7 @@ import InterviewerListItem from "./InterviewerListItem";
 import PropTypes from 'prop-types';
 
 export default function InterviewerList(props) {
-  // Creates a InterviewerListItem component for each interviewer from the list of interviewers
+  /* Creates a InterviewerListItem component for each interviewer to form the list of interviewers */
   const interviewerListItemsArray = props.interviewers.map((interviewer) => {
     return (
       <InterviewerListItem
