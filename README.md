@@ -1,5 +1,7 @@
 # Interview Scheduler
 
+A react application that allows users to book interviews within a schedule with selected interviewers.
+
 ## Setup
 
 Install dependencies with `npm install`.
@@ -21,3 +23,19 @@ npm test
 ```sh
 npm run storybook
 ```
+## E2E testing with Cypress
+
+```sh
+npm run cypress
+```
+
+# Screenshots
+
+### Add an appointment
+![add-appointment](./docs/add.gif)
+
+### Edit an appointment
+![edit-appointment](./docs/edit.gif)
+
+### Delete an appointment
+![delete-appointment](./docs/delete.gif)
